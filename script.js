@@ -1,6 +1,5 @@
 const countryContainer = document.querySelector(".countries");
 const boton = document.querySelector("#btnPais");
-console.log(boton);
 
 const renderCountry = (data, optionalClass = "") => {
   const country = data.name.common;
@@ -25,9 +24,11 @@ const renderCountry = (data, optionalClass = "") => {
   countryContainer.innerHTML += html;
   countryContainer.style.opacity = 1;
 };
-
+//función coger datos
 const getCountryData = function (country) {
+  //promesa
   fetch(`https://restcountries.com/v3.1/name/${country}`)
+    //cuando llegue
     .then((response) => {
       console.log(response);
       if (!response.ok) {
@@ -48,6 +49,7 @@ const getCountryData = function (country) {
       return response.json();
     })
     .then(([data]) => renderCountry(data, "neighbour"))
+    //si no mandamos nosotros el error, aquí entraría rejected
     .catch((err) => console.log("MENSAJE ERROR:", err.message));
 };
 
@@ -64,3 +66,19 @@ const getJSON = function (url, errMessage) {
     return response.json();
   });
 };
+function whereami(lat, lng) {
+  const url = `https://geocode.xyz/${lad},${lng}?geoit=json`;
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(`País no encontrado, código ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(([data]) => {
+      console.log(data);
+
+      //obtener pais y a llamar a getCountryData
+    })
+    .catch((err) => console.log(err.message, "xxxxxxxxx"));
+}
