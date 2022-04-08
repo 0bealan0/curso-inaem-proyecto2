@@ -66,19 +66,32 @@ const getJSON = function (url, errMessage) {
     return response.json();
   });
 };
-function whereami(lat, lng) {
-  const url = `https://geocode.xyz/${lad},${lng}?geoit=json`;
-  fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(`País no encontrado, código ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(([data]) => {
-      console.log(data);
 
-      //obtener pais y a llamar a getCountryData
-    })
-    .catch((err) => console.log(err.message, "xxxxxxxxx"));
-}
+const whereami = (lad, lng) => {
+  const request = new XMLHttpRequest();
+  request.open("GET", `https://geocode.xyz/${lad},${lng}?geoit=json`);
+  request.send();
+  request.addEventListener("load", function () {
+    // const data = JSON.parse(this.responseText)[0];
+    const [data] = JSON.parse(this.responseText);
+    console.log(`hola `);
+  });
+};
+
+// function whereami(lat, lng) {
+//   const url = `https://geocode.xyz/${lad},${lng}?geoit=json`;
+
+//   fetch(url)
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw Error(`País no encontrado, código ${response.status}`);
+//       }
+//       return response.json();
+//     })
+//     .then(([data]) => {
+//       console.log(data);
+
+//       //obtener pais y a llamar a getCountryData
+//     })
+//     .catch((err) => console.log(err.message, "xxxxxxxxx"));
+// }
